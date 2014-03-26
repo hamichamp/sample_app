@@ -71,10 +71,6 @@ describe "AuthenticationPages" do
             before do
               delete signout_path
               sign_in user
-              # visit signin_path
-              # fill_in "Email", with: user.email
-              # fill_in "Password", with: user.password
-              # click_button "Sign in"
             end
 
             it "should render the defalut(profile) page" do
@@ -82,23 +78,18 @@ describe "AuthenticationPages" do
             end
           end
 
-          describe "visit signup page" do
-            before { visit signup_path }
+          # describe "visit signup page" do
+          #   before { visit signup_path }
 
-            it "should render root page" do
-              page.should have_selector('h1', text: 'Welcome to the Sample App')
-            end
-          end
+          #   it "should render root page" do
+          #     page.should have_selector('h1', text: 'Welcome to the Sample App')
+          #   end
+          # end
 
-          describe "post signup page" do
-            it "should render root page" do
-              post signup_path user
-              specify { response.should redirect_to(root_path) }
-           end
-            # it "should render root page" do
-            #   page.should have_selector('h1', text: 'Welcome to the Sample App')
-            # end
-          end
+          # describe "submitting to the create user action" do
+          #   before { post signup_path }
+          #   specify { response.should redirect_to(root_path) }
+          # end
         end
       end
 
@@ -116,6 +107,18 @@ describe "AuthenticationPages" do
         describe "visiting the user index" do
           before { visit users_path }
           it { should have_selector('title', text: 'Sign in') }
+        end
+      end
+
+      describe "in the Microposts controller" do
+        describe "submitting to the create action" do
+          before { post microposts_path }
+          specify { response.should redirect_to(signin_path) }
+        end
+
+        describe "submitting to the destroy action" do
+          before { delete micropost_path(FactoryGirl.create(:micropost)) }
+          specify { response.should redirect_to(signin_path) }
         end
       end
     end
